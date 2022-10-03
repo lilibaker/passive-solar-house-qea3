@@ -2,6 +2,7 @@ function [dT_thermal_mass, dT_air] = change_in_temp(k_fiberglass, p_thermal_mass
 % Function to calculate change in temperature over time
 % TODO: figure out where rho thermal mass goes; combine equations somehow;
 % seperate solar radiation in into a different file for angle impact
+% add window resistance and c
 
 A_thermal_mass = 5.1 * 5 * thickness_thermal_mass; % m^3
 A_window = 2.6 * 5; % m^2, arbitrary window width of 5
