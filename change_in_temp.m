@@ -1,8 +1,21 @@
-function [dT_thermal_mass, dT_air] = change_in_temp(k_fiberglass, p_thermal_mass, c_thermal_mass, thickness_thermal_mass, thickness_fiberglass, h_indoor, h_outdoor, h_eff, T_outside, sun_angle, t)
+function dT_thermal_mass = change_in_temp(t, T)
 % Function to calculate change in temperature over time
 % TODO: figure out where rho thermal mass goes; combine equations somehow;
 % seperate solar radiation in into a different file for angle impact
 % add window resistance and c
+
+% Constants
+k_fiberglass = 0.04;              % W/m-K
+p_thermal_mass = 3000;            % kg/m^3
+c_thermal_mass = 800;             % J/kg-K
+h_indoor = 15;                    % W/m^2-K
+h_eff = 1.4;                      % W/m^2-K   
+h_outdoor = 30;                   % W/m^2-K
+T_outside = 270.15;               % K
+sun_angle_summer = 25*(pi/180);   % Radians
+sun_angle_winter = 72*(pi/180);   % Radians
+thickness_thermal_mass = 0.3048;   % m (arbitrary)
+thickness_fiberglass = 0.1397;   % m (arbitrary)
 
 A_thermal_mass = 5.1 * 5 * thickness_thermal_mass; % m^3
 A_window = 2.6 * 5; % m^2, arbitrary window width of 5
@@ -24,7 +37,7 @@ Q_in_window = q * A_window;
 
 % step 2
 % calculate change in temp of thermal mass
-dT_thermal_mass = (Q_in_window - (T_thermal - T_outside)/R_total) / (p_thermal_mass * c_thermal_mass);
+dT_thermal_mass = (Q_in_window - (T - T_outside)/R_total) / (p_thermal_mass * c_thermal_mass);
 
 end
 
