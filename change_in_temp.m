@@ -14,21 +14,25 @@ h_outdoor = 30;                   % W/m^2-K
 T_outside = 270.15;               % K
 sun_angle_summer = 25*(pi/180);   % Radians
 sun_angle_winter = 72*(pi/180);   % Radians
-thickness_thermal_mass = 0.3048;   % m (arbitrary)
-thickness_fiberglass = 0.1397;   % m (arbitrary)
+thickness_thermal_mass = 0.6096;   % m (arbitrary)
+thickness_fiberglass = 0.0762;   % m (arbitrary)
+
 
 A_thermal_mass = 5.1 * 5 * thickness_thermal_mass; % m^3
 A_window = 2.6 * 5; % m^2, arbitrary window width of 5
 A_wall = 5.1 * 5 + 6 * 5.1 + 3.2 * 2 * 5.1 + 3.2 * 5 + 0.4 * 5 + 0.2 * 5; % m^2
 
+m_thermal_mass = thickness_thermal_mass * A_thermal_mass * p_thermal_mass;
 % step 0
 % calculate resistances
 r_thermal_mass = 1 / (h_indoor * A_thermal_mass);
 r_wall_inside = 1 / (h_indoor * A_wall);
 r_wall_internal = thickness_fiberglass / (k_fiberglass * A_wall);
-r_wall_to_outside = 1 / (h_outdoor * A_thermal_mass);
+r_wall_to_outside = 1 / (h_outdoor * A_wall);
+r_window_in_window = (h_indoor * A_window)^(-1);
+r_window_window_out = (h_outdoor * A_window)^(-1);
 
-R_total = r_thermal_mass + (1/(1/(h_eff * A_window) + (1/(h_eff * A_window)) + 1/(r_wall_inside + r_wall_internal+r_wall_to_outside)));
+R_total = r_thermal_mass + ((r_window_in_window + r_window_window_out)^(-1) + (r_wall_inside + r_wall_internal+r_wall_to_outside)^(-1))^(-1);
 
 % step 1
 % calculate Q in and Q out of everything
@@ -37,7 +41,7 @@ Q_in_window = q * A_window;
 
 % step 2
 % calculate change in temp of thermal mass
-dT_thermal_mass = (Q_in_window - (T - T_outside)/R_total) / (p_thermal_mass * c_thermal_mass);
+dT_thermal_mass = (Q_in_window - (T - T_outside)/R_total) / (m_thermal_mass * c_thermal_mass);
 
 end
 
