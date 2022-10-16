@@ -14,11 +14,11 @@ h_outdoor = 30;                   % W/m^2-K
 T_outside = 270.15;               % K
 sun_angle_summer = 25*(pi/180);   % Radians
 sun_angle_winter = 72*(pi/180);   % Radians
-thickness_thermal_mass = 0.6096;   % m (arbitrary)
-thickness_fiberglass = 0.1651;   % m (arbitrary)
+thickness_thermal_mass = 0.7112;  % m (arbitrary)
+thickness_fiberglass = 0.2286;    % m (arbitrary)
 
 
-A_thermal_mass = 5.1 * 5; % m^2
+A_thermal_mass = 5.1 * 5 * 2 + 5.1 * thickness_thermal_mass * 2 + 5 * thickness_thermal_mass * 2; % m^2
 A_window = 2.6 * 5; % m^2, arbitrary window width of 5
 A_wall = 5.1 * 5 + 6 * 5.1 + 3.2 * 2 * 5.1 + 3.2 * 5 + 0.4 * 5 + 0.2 * 5; % m^2
 
